@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<h1>HTTP Binary ReadableStream</h1>
+<body>
+  <div>
+    Send a simple GET request to your Express backend requesting a file.
+    Server receives request, receives a ReadableStream object, processes the stream</br>
+    into a Buffer object, and passes the Buffer back to client side. 
+  </div>
+  <div>
+    <a id="a1">Download any file</a>
+  </div>
+  </br>
+
+  <div>
+    <code id="placeholder"></code>
+  </div>
+  
+  <script>
+    const a1 = document.getElementById('a1');
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          // Display file directly on page
+          // document.getElementById('placeholder').innerHTML = xhr.response
+
+          // Create a Blob object to let user download file
+          const blob = new Blob([xhr.response])
+          a1.download = 'your_file_name.tar'
+          a1.href = URL.createObjectURL(blob)
+        }
+    }
+    xhr.open('GET', 'http://localhost:5432/blogs/file_name.tar');
+    xhr.send();
+    
+  </script>
+</body>
+
+
+
+</html>
